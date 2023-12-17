@@ -77,7 +77,7 @@ class XTTS_REPL:
         print(f"Loaded")
         self.model.cuda()
 
-    def latent_from_audio(self, ref_audios):
+    def load_latent_from_audio(self, ref_audios):
         if ref_audios is None or not len(ref_audios):
             return None
         self.current_ref = ref_audios
@@ -101,7 +101,7 @@ class XTTS_REPL:
         save_path = os.path.join(DEFAULT_LATENTS_FOLDER,latents_key+".latents")
         torch.save((gpt_cond_latent, spk_emb), save_path)
 
-        return self.latents_cache[latents_key]
+        self.current_latent = self.latents_cache[latents_key]
 
     def load_latent(self, l):
         if not os.path.exists(l):
@@ -175,7 +175,7 @@ class XTTS_REPL:
         self.latents_cache = {}
         self.files = files
         self.current_ref = [conf['default_reference_audio']]
-        self.current_latent = self.latent_from_audio(self.current_ref)
+        self.current_latent = self.load_latent_from_audio(self.current_ref)
         self.language = 'en'
         self.temperature = conf['default_temperature']
         self.out_wavs = []
@@ -210,12 +210,13 @@ class XTTS_REPL:
         print("Saving audio to "+wav_label)
         sf.write(os.path.join(OUT_DIR,wav_label),
             audio_data, XTTS_V2_SAMPLE_RATE)
+        return os.path.join(OUT_DIR,wav_label)
 
     def repl(self):
         r = Repple()
 
         def select_reference_audios():
-            self.current_latent = self.latent_from_audio(
+            self.current_latent = self.load_latent_from_audio(
                 Repple.selector(self.files['reference_audios'],
                     select_str = "Select reference audios: "))
 
