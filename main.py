@@ -27,7 +27,7 @@ WAV_TRUNCATE_LENGTH = 30
 XTTS_V2_SAMPLE_RATE = 24000
 
 class XTTS_REPL:
-    def find_files(self, conf):
+    def find_files(self):
         ret = {}
         ret['ckpts'] = []
         ret['latents'] = []
@@ -44,7 +44,7 @@ class XTTS_REPL:
                             f" skipping")
                     ret['ckpts'].append(str(file))
 
-        for path in conf['reference_audio_search_dirs']:
+        for path in self.conf['reference_audio_search_dirs']:
             for path,_,files in os.walk(path):
                 for file in files:
                     file = Path(os.path.join(path,file))
@@ -52,7 +52,7 @@ class XTTS_REPL:
                         ['.mp3','.wav','.flac','.ogg','.aac','.wma']):
                         ret['reference_audios'].append(str(file))
 
-        for path in conf['latents_search_dirs']:
+        for path in self.conf['latents_search_dirs']:
             for path,_,files in os.walk(path):
                 for file in files:
                     file = Path(os.path.join(path,file))
