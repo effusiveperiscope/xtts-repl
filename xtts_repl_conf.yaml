@@ -1,0 +1,9 @@
+reference_audio_search_dirs:
+- ref_audio
+latents_search_dirs:
+- latents
+default_ckpt: models\Celestia\best_model_pruned.pth
+default_reference_audio: ref_audio\celestia_0.wav
+default_temperature: 0.7
+random_seed: 42
+gen_repeats: 3

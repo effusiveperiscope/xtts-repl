@@ -1,0 +1,4 @@
+latents/*.latents
+results/*
+ref_audio/*.wav
+ref_audio/*.flac

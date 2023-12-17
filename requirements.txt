@@ -1,0 +1,9 @@
+torch
+omegaconf
+repple
+tqdm
+TTS
+pydub
+soundfile
+python-slugify
+numpy
