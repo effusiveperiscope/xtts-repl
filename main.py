@@ -134,6 +134,7 @@ class XTTS_REPL:
             })
         else:
             conf = OmegaConf.load(CONF_PATH)
+        self.conf = conf
         files = self.find_files()
         
         if not os.path.exists(DEFAULT_LATENTS_FOLDER):
