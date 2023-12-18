@@ -178,7 +178,8 @@ class XTTS_REPL:
         self.latents_cache = {}
         self.files = files
         self.current_ref = [conf['default_reference_audio']]
-        self.current_latent = self.load_latent_from_audio(self.current_ref)
+        self.current_latent = None
+        self.load_latent_from_audio(self.current_ref)
         self.language = 'en'
         self.temperature = conf['default_temperature']
         self.out_wavs = []
