@@ -208,7 +208,7 @@ class XTTS_REPL:
         wav_label_pre = slugify(wav_label)
         wav_label = wav_label_pre + '.wav'
         i = 1
-        while os.path.exists(wav_label):
+        while os.path.exists(os.path.join(OUT_DIR,wav_label)):
             wav_label = wav_label_pre + str(i) + '.wav'
             i += 1
         print("Saving audio to "+wav_label)
