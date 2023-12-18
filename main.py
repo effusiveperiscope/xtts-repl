@@ -58,7 +58,7 @@ class XTTS_REPL:
                     file = Path(os.path.join(path,file))
                     if (file.name.endswith('.latents')):
                         ret['latents'].append(str(file))
-        return ret
+        self.files = ret
 
     def load_model_from_paths(self, ckpt_path):
         ckpt_path = Path(ckpt_path)
@@ -136,7 +136,8 @@ class XTTS_REPL:
         else:
             conf = OmegaConf.load(CONF_PATH)
         self.conf = conf
-        files = self.find_files()
+        self.files = None
+        self.find_files()
         
         if not os.path.exists(DEFAULT_LATENTS_FOLDER):
             os.makedirs(DEFAULT_LATENTS_FOLDER)
@@ -176,7 +177,6 @@ class XTTS_REPL:
         self.load_model_from_paths(conf['default_ckpt'])
         
         self.latents_cache = {}
-        self.files = files
         self.current_ref = [conf['default_reference_audio']]
         self.current_latent = None
         self.load_latent_from_audio(self.current_ref)
@@ -231,9 +231,6 @@ class XTTS_REPL:
                 is_unary=True)[0]
             )
 
-        def refresh_files():
-            self.files = self.find_files(self.conf)
-
         def set_temperature(temperature):
             self.temperature = temperature
 
@@ -281,7 +278,7 @@ class XTTS_REPL:
 
         r['M'] = (select_ckpt, "Select model checkpoint and load model")
         r['R'] = (select_reference_audios, "Select reference audios")
-        r['refr'] = (refresh_files, "Refresh files")
+        r['refr'] = (self.find_files, "Refresh files")
         r['temp'] = (set_temperature, "Set temperature")
         r.add_string_func('T', self.tts, desc="TTS")
         r['t'] = (repeat_tts, "Repeat last TTS request")
