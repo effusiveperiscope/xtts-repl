@@ -220,7 +220,7 @@ class XTTS_REPL:
         r = Repple()
 
         def select_reference_audios():
-            self.current_latent = self.load_latent_from_audio(
+            self.load_latent_from_audio(
                 Repple.selector(self.files['reference_audios'],
                     select_str = "Select reference audios: "))
 
