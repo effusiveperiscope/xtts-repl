@@ -151,18 +151,18 @@ class XTTS_REPL:
             conf['default_reference_audio'] = ''
         
         files_checks = True
-        if not len(files['ckpts']):
+        if not len(self.files['ckpts']):
             print("No compatible XTTS checkpoints found")
             files_checks = False
-        elif not len(files['reference_audios']):
+        elif not len(self.files['reference_audios']):
             print("No reference audios found")
             files_checks = False
 
-        if len(files['ckpts']) and not len(conf['default_ckpt']):
-            conf['default_ckpt'] = files['ckpts'][0]
-        if len(files['reference_audios']) and not len(
+        if len(self.files['ckpts']) and not len(conf['default_ckpt']):
+            conf['default_ckpt'] = self.files['ckpts'][0]
+        if len(self.files['reference_audios']) and not len(
             conf['default_reference_audio']):
-            conf['default_reference_audio'] = files['reference_audios'][0]
+            conf['default_reference_audio'] = self.files['reference_audios'][0]
 
         self.conf = conf
 
