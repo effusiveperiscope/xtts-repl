@@ -76,6 +76,7 @@ class XTTS_REPL:
             checkpoint_dir = ckpt_path.parent)
         print(f"Loaded")
         self.model.cuda()
+        self.current_ckpt = ckpt_path
 
     def load_latent_from_audio(self, ref_audios):
         if ref_audios is None or not len(ref_audios):
@@ -171,6 +172,7 @@ class XTTS_REPL:
             return
 
         xtts_config = XttsConfig()
+        self.current_ckpt = ""
         self.load_model_from_paths(conf['default_ckpt'])
         
         self.latents_cache = {}
