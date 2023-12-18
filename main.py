@@ -230,6 +230,7 @@ class XTTS_REPL:
                 select_str = "Select model checkpoint: ",
                 is_unary=True)[0]
             )
+            self.load_latent_from_audio(self.current_ref)
 
         def set_temperature(temperature):
             self.temperature = temperature
@@ -243,6 +244,7 @@ class XTTS_REPL:
             print(f"Temperature: {self.temperature}")
             print(f"Language: {self.language}")
             print(f"Reference audios: {self.current_ref}")
+            print(f"Current model: {self.current_ckpt}")
 
         def preview_audio_by_idx(idx):
             if idx < len(self.out_wavs):
